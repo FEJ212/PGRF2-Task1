@@ -13,12 +13,16 @@ public class DepthBuffer implements Raster<Double>{
 
     @Override
     public void setValue(int x, int y, Double value) {
-        buffer[x][y]=value;
+        if(isInRaster(x, y)) {
+            buffer[x][y] = value;
+        }
     }
 
     @Override
     public Double getValue(int x, int y) {
-        return buffer[x][y];
+        if(isInRaster(x, y)) {
+            return buffer[x][y];
+        } else return null;
     }
 
     @Override
@@ -38,5 +42,12 @@ public class DepthBuffer implements Raster<Double>{
                 buffer[i][j]=1;
             }
         }
+    }
+
+    @Override
+    public boolean isInRaster(int x, int y) {
+        if (x>=0 && x<width && y>=0 && y<height) {
+            return true;
+        } else return false;
     }
 }

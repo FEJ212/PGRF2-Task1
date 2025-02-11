@@ -2,13 +2,14 @@ package view;
 
 import raster.Raster;
 import raster.ImageBuffer;
+import transforms.Col;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Panel extends JPanel {
 
-    private final Raster raster;
+    private final Raster<Col> raster;
 
     public Panel(int width, int height) {
         setPreferredSize(new Dimension(width, height));
@@ -26,7 +27,7 @@ public class Panel extends JPanel {
         raster.clear();
     }
 
-    public Raster getRaster() {
+    public Raster<Col> getRaster() {
         return raster;
     }
 }

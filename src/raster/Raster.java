@@ -6,4 +6,5 @@ public interface Raster<T> {
     int getWidth();
     int getHeight();
     void clear();
+    boolean isInRaster(int x, int y);
 }
