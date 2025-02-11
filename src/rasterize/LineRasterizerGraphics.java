@@ -2,10 +2,9 @@ package rasterize;
 
 import model.Line;
 import raster.Raster;
-import raster.RasterBufferedImage;
+import raster.ImageBuffer;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class LineRasterizerGraphics extends LineRasterizer {
 
@@ -19,7 +18,7 @@ public class LineRasterizerGraphics extends LineRasterizer {
 
     @Override
     public void drawLine(Line line) {
-        Graphics g = ((RasterBufferedImage)raster).getGraphics();
+        Graphics g = ((ImageBuffer)raster).getGraphics();
         g.setColor(new Color(color));
         g.drawLine(line.getX1(), line.getY1(), line.getX2(), line.getY2());
     }

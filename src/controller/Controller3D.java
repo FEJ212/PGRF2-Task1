@@ -31,6 +31,7 @@ public class Controller3D {
 
 
 
+
         panel.repaint();
     }
 

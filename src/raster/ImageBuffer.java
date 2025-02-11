@@ -1,24 +1,26 @@
 package raster;
 
+import transforms.Col;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class RasterBufferedImage implements Raster {
+public class ImageBuffer implements Raster<Col> {
 
     private final BufferedImage image;
 
-    public RasterBufferedImage(int width, int height) {
+    public ImageBuffer(int width, int height) {
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
 
     @Override
-    public void setPixel(int x, int y, int value) {
-        image.setRGB(x, y, value);
+    public void setValue(int x, int y, Col value) {
+        image.setRGB(x, y, value.getRGB());
     }
 
     @Override
-    public int getPixel(int x, int y) {
-        return image.getRGB(x, y);
+    public Col getValue(int x, int y) {
+        return new Col(image.getRGB(x, y)&0x000000FF);
     }
 
     @Override
