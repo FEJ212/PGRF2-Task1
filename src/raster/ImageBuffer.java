@@ -23,7 +23,7 @@ public class ImageBuffer implements Raster<Col> {
     @Override
     public Col getValue(int x, int y) {
         if(isInRaster(x, y)) {
-            return new Col(image.getRGB(x, y)&0x000000FF);
+            return new Col(image.getRGB(x, y)&0xffffff00);
         }
         return null;
     }
