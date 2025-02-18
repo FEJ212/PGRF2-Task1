@@ -6,9 +6,9 @@ public class DepthBuffer implements Raster<Double>{
 
     public DepthBuffer(int width, int height) {
         this.buffer=new double[width][height];
-        clear();
         this.width = width;
         this.height = height;
+        clear();
     }
 
     @Override
