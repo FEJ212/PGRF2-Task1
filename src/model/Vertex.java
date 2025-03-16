@@ -5,24 +5,15 @@ import transforms.*;
 public class Vertex {
     private final Point3D position;
     private final Col color;
-    private final Vec3D normal;
 
-    public Vertex(Point3D position, Col color, Vec3D normal) {
+    public Vertex(Point3D position, Col color) {
         this.position = position;
         this.color = color;
-        this.normal = normal;
-    }
-
-    public Vertex (Point3D position, Col color) {
-        this.position = position;
-        this.color = color;
-        this.normal = new Vec3D(0,0,0);
     }
 
     public Vertex(Point3D position) {
         this.position = position;
         this.color = new Col(0xffffff);
-        this.normal = new Vec3D(0, 0, 0);
     }
 
     public Point3D getPosition() {
@@ -33,20 +24,25 @@ public class Vertex {
         return color;
     }
 
-    public Vec3D getNormal() {
-        return normal;
-    }
-
-    @Override
     public Vertex mul(double k) {
-        // TODO: implementovat
-        return null;
+        return new Vertex(position.mul(k), color.mul(k));
     }
 
-    @Override
     public Vertex add(Vertex v) {
-        // TODO: implementovat
-        return null;
+        return new Vertex(position.add(v.getPosition()), color.add(v.getColor()));
+    }
+
+    public double getX(){
+        return position.getX();
+    }
+    public double getY(){
+        return position.getY();
+    }
+    public double getZ(){
+        return position.getZ();
+    }
+    public double getW(){
+        return position.getW();
     }
 
 }

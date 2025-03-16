@@ -28,7 +28,7 @@ public class Controller3D {
         this.zBuffer = new ZBuffer(panel.getRaster());
         // TODO: pozor, posílá se tam raster místo zbufferu
         this.lineRasterizer = new LineRasterizerGraphics(panel.getRaster());
-        this.triangleRasterizer = new TriangleRasterizer(zBuffer, lineRasterizer);;
+        this.triangleRasterizer = new TriangleRasterizer(zBuffer, lineRasterizer, panel);;
         this.renderer = new Renderer(lineRasterizer, triangleRasterizer);
 
         initListeners();

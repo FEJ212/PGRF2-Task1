@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Vertex rasterizization progress">
-      <change afterPath="$PROJECT_DIR$/src/model/Part.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/TopologyType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Vectorizable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rasterize/LineRasterizerTrivial.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/render/Renderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/solid/Arrow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/solid/Solid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/Lerp.java" afterDir="false" />
+    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Doplnění kódu ze cvik">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/Controller3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller3D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/TopologyType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TopologyType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Vertex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/solid/Solid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Solid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +89,7 @@
       <workItem from="1739875168965" duration="10276000" />
       <workItem from="1740467312301" duration="3776000" />
       <workItem from="1740585360988" duration="13000" />
-      <workItem from="1742147945691" duration="659000" />
+      <workItem from="1742147945691" duration="4433000" />
     </task>
     <task id="LOCAL-00001" summary="Project creation">
       <option name="closed" value="true" />
@@ -145,7 +139,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739876063687</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Doplnění kódu ze cvik">
+      <option name="closed" value="true" />
+      <created>1742148628680</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1742148628680</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +171,7 @@
     <MESSAGE value="Alpha channel removal bug fix" />
     <MESSAGE value="Z-Buffer bug fix" />
     <MESSAGE value="Vertex class creation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Vertex class creation" />
+    <MESSAGE value="Doplnění kódu ze cvik" />
+    <option name="LAST_COMMIT_MESSAGE" value="Doplnění kódu ze cvik" />
   </component>
 </project>

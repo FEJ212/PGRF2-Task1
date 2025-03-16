@@ -1,119 +1,113 @@
 package rasterize;
 
-import model.Line;
 import model.Vertex;
 import raster.ZBuffer;
 import transforms.Col;
+import transforms.Mat4;
 import transforms.Point3D;
+import transforms.Vec3D;
+import view.Panel;
 
 public class TriangleRasterizer {
     private final ZBuffer zBuffer;
+    private final Panel panel;
     private final LineRasterizer lineRasterizer;
+    private Mat4 model, view, projection;
 
-    public TriangleRasterizer(ZBuffer zBuffer, LineRasterizer lineRasterizer) {
+    public TriangleRasterizer(ZBuffer zBuffer, LineRasterizer lineRasterizer,Panel panel) {
         this.zBuffer = zBuffer;
         this.lineRasterizer = lineRasterizer;
+        this.panel = panel;
     }
 
-    public void rasterize(Vertex a, Vertex b, Vertex c){
-        lineRasterizer.drawLine(new Line((int)a.getPosition().getX(), (int)a.getPosition().getY(), (int)b.getPosition().getX(), (int)b.getPosition().getY()));
-        lineRasterizer.drawLine(new Line((int)b.getPosition().getX(), (int)b.getPosition().getY(), (int)c.getPosition().getX(), (int)c.getPosition().getY()));
-        lineRasterizer.drawLine(new Line((int)a.getPosition().getX(), (int)a.getPosition().getY(), (int)c.getPosition().getX(), (int)c.getPosition().getY()));
-
-        //TODO: Transformace do okna obrazovky
-
-        int xA=(int)Math.round(a.getPosition().getX());
-        int yA=(int)Math.round(a.getPosition().getY());
-        double zA= a.getPosition().getZ();
-        Col colA = a.getColor();
-
-        int xB=(int)Math.round(b.getPosition().getX());
-        int yB=(int)Math.round(b.getPosition().getY());
-        double zB= b.getPosition().getZ();
-        Col colB = b.getColor();
-
-        int xC=(int)Math.round(c.getPosition().getX());
-        int yC=(int)Math.round(c.getPosition().getY());
-        double zC= c.getPosition().getZ();
-        Col colC = c.getColor();
-
-        if(yA>yB){
-            int tempX = xA;
-            int tempY = yA;
-            double tempZ = zA;
-            Col tempCol = colA;
-            xA = xB;
-            yA = yB;
-            zA = zB;
-            colA = colB;
-            xB = tempX;
-            yB = tempY;
-            zB = tempZ;
-            colB = tempCol;
+    public void prepare(Vertex aOriginal, Vertex bOriginal, Vertex cOriginal){
+        //transformace
+        Vertex a = new Vertex(aOriginal.getPosition().mul(model).mul(view).mul(projection), aOriginal.getColor());
+        Vertex b = new Vertex(bOriginal.getPosition().mul(model).mul(view).mul(projection), bOriginal.getColor());
+        Vertex c = new Vertex(cOriginal.getPosition().mul(model).mul(view).mul(projection), cOriginal.getColor());
+        //ořezání vertexů plně mimo raster
+        if (a.getX() > a.getW() && b.getX() > b.getW() && c.getX() > c.getW()) return;
+        if (a.getX() < -a.getW() && b.getX() < -b.getW() && c.getX() < -c.getW()) return;
+        if (a.getY() > a.getW() && b.getY() > b.getW() && c.getY() > c.getW()) return;
+        if (a.getY() < -a.getW() && b.getY() < -b.getW() && c.getY() < -c.getW()) return;
+        if (a.getZ() > a.getW() && b.getZ() > b.getW() && c.getZ() > c.getW()) return;
+        if (a.getZ() < 0 && b.getZ() < 0 && c.getZ() < 0) return;
+        //seřazení vrcholů dle Z pro Z ořezání
+        if (a.getZ() < b.getZ()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
         }
-        if(yB>yC){
-            int tempX = xB;
-            int tempY = yB;
-            double tempZ = zB;
-            Col tempCol = colB;
-            xB = xC;
-            yB = yC;
-            zB = zC;
-            colB = colC;
-            xC = tempX;
-            yC = tempY;
-            zC = tempZ;
-            colC = tempCol;
+        if (b.getZ() < c.getZ()) {
+            Vertex temp = b;
+            b = c;
+            c = temp;
         }
-
-        for(int y=yA; y<=yB; y++){
-            double tAB = (y-yA)/(double)(yB-yA);
-            int xAB = (int)Math.round((1-tAB)*xA+tAB*xB);
-            double zAB = (1-tAB)*zA+tAB*zB;
-
-            double tAC = (y-yA)/(double)(yC-yA);
-            int xAC = (int)Math.round((1-tAC)*xA+tAC*xC);
-            double zAC = (1-tAC)*zA+tAC*zC;
-
-            if (xAB>xAC){
-                int tempX = xAB;
-                double tempZ = zAB;
-                xAB = xAC;
-                zAB = zAC;
-                xAC = tempX;
-                zAC = tempZ;
-            }
-
-            for(int x=xAB; x<=xAC; x++){
-                double tZ = (x-xAC)/(zAB-zAC);
-                double z = (1-tZ)*zA+tZ*zB;
-                zBuffer.setPixelWithZTest(x,y,z,colA);
-            }
+        if (a.getZ() < b.getZ()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
         }
-        for(int y=yB; y<=yC; y++){
-            double tBC = (y-yB)/(double)(yC-yB);
-            int xBC = (int)Math.round((1-tBC)*xB+tBC*xC);
-            double zBC = (1-tBC)*zB+tBC*zC;
+        //ořezání dle Z
+        if(b.getZ()<0){
+            double t1 = (0 - a.getZ()) / (b.getZ() - a.getZ());
+            Vertex ab = a.mul(1 - t1).add(b.mul(t1));
 
-            double tAC = (y-yA)/(double)(yC-yA);
-            int xAC = (int)Math.round((1-tAC)*xA+tAC*xC);
-            double zAC = (1-tAC)*zA+tAC*zC;
+            double t2 = -a.getZ() / (c.getZ() - a.getZ());
+            Vertex ac = a.mul(1 - t2).add(c.mul(t2));
 
-            if (xBC>xAC){
-                int tempX = xBC;
-                double tempZ = zBC;
-                xBC = xAC;
-                zBC = zAC;
-                xAC = tempX;
-                zAC = tempZ;
-            }
+            rasterize(a, ab, ac);
+        } else if (c.getZ() < 0) {
+            double t1 = -a.getZ() / (c.getZ() - a.getZ());
+            Vertex ac = a.mul(1 - t1).add(c.mul(t1));
 
-            for(int x=xBC; x<=xAC; x++){
-                double tZ = (x-xAC)/(zBC-zAC);
-                double z = ((1-tZ)*zA+tZ*zB);
-                zBuffer.setPixelWithZTest(x,y,z,colA);
-            }
+            double t2 = -b.getZ() / (c.getZ() - b.getZ());
+            Vertex bc = b.mul(1 - t2).add(c.mul(t2));
+
+            rasterize(a, b, bc);
+            rasterize(a, ac, bc);
+        } else {
+            rasterize(a, b, c);
         }
 
+    }
+
+    public void rasterize(Vertex aOriginal, Vertex bOriginal, Vertex cOriginal){
+        //TODO: dehomogenizace
+        Vertex aDehom = aOriginal;
+        Vertex bDehom = bOriginal;
+        Vertex cDehom = cOriginal;
+        //Transformace do okna
+        Vec3D vecA = transformaceDoOkna(aDehom.getPosition());
+        Vertex a = new Vertex(new Point3D(vecA), aDehom.getColor());
+
+        Vec3D vecB = transformaceDoOkna(bDehom.getPosition());
+        Vertex b = new Vertex(new Point3D(vecB), bDehom.getColor());
+
+        Vec3D vecC = transformaceDoOkna(cDehom.getPosition());
+        Vertex c = new Vertex(new Point3D(vecC), cDehom.getColor());
+        //seřazení podle Y
+        if (a.getY() > b.getY()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
+        }
+        if (b.getY() > c.getY()) {
+            Vertex temp = b;
+            b = c;
+            c = temp;
+        }
+        if (a.getY() > b.getY()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
+        }
+
+
+    }
+    private Vec3D transformaceDoOkna(Point3D vec) {
+        return new Vec3D(vec)
+                .mul(new Vec3D(1, -1, 1)).add(new Vec3D(1, 1, 0))
+                .mul(new Vec3D(panel.getWidth() / 2f, panel.getHeight() / 2f, 1));
     }
 }
