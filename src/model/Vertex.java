@@ -13,6 +13,12 @@ public class Vertex {
         this.normal = normal;
     }
 
+    public Vertex (Point3D position, Col color) {
+        this.position = position;
+        this.color = color;
+        this.normal = new Vec3D(0,0,0);
+    }
+
     public Vertex(Point3D position) {
         this.position = position;
         this.color = new Col(0xffffff);
@@ -30,5 +36,18 @@ public class Vertex {
     public Vec3D getNormal() {
         return normal;
     }
+
+    @Override
+    public Vertex mul(double k) {
+        // TODO: implementovat
+        return null;
+    }
+
+    @Override
+    public Vertex add(Vertex v) {
+        // TODO: implementovat
+        return null;
+    }
+
 }
 
