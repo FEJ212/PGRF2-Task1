@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Triangle Rasterizer a renderer update">
+    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Dehomogenizace a FAN primitiva">
+      <change afterPath="$PROJECT_DIR$/src/solid/Cube.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/Controller3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller3D.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/TopologyType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TopologyType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raster/ZBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/raster/ZBuffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rasterize/LineRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/LineRasterizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rasterize/LineRasterizerGraphics.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rasterize/LineRasterizerTrivial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/LineRasterizerTrivial.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/render/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/solid/Axis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Axis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/solid/Solid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Solid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +94,7 @@
       <workItem from="1740467312301" duration="3776000" />
       <workItem from="1740585360988" duration="13000" />
       <workItem from="1742147945691" duration="7895000" />
-      <workItem from="1742193968181" duration="13114000" />
+      <workItem from="1742193968181" duration="19481000" />
     </task>
     <task id="LOCAL-00001" summary="Project creation">
       <option name="closed" value="true" />
@@ -171,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742204814412</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Dehomogenizace a FAN primitiva">
+      <option name="closed" value="true" />
+      <created>1742214444629</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1742214444629</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +212,7 @@
     <MESSAGE value="Příprava interpolace vertexu" />
     <MESSAGE value="Renderer dokončení" />
     <MESSAGE value="Triangle Rasterizer a renderer update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Triangle Rasterizer a renderer update" />
+    <MESSAGE value="Dehomogenizace a FAN primitiva" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dehomogenizace a FAN primitiva" />
   </component>
 </project>

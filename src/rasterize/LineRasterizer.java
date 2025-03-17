@@ -3,19 +3,21 @@ package rasterize;
 import model.Line;
 import model.Vertex;
 import raster.Raster;
+import raster.ZBuffer;
+import transforms.Col;
 
 
 public abstract class LineRasterizer {
-    protected final Raster raster;
-    protected int color;
+    protected final ZBuffer zBuffer;
+    protected Col color;
 
-    public LineRasterizer(Raster raster) {
-        this.raster = raster;
-        this.color = 0xff0000;
+    public LineRasterizer(ZBuffer zBuffer) {
+        this.zBuffer = zBuffer;
+        this.color = new Col(0xffffff);
     }
 
-    public LineRasterizer(Raster raster, int color) {
-        this.raster = raster;
+    public LineRasterizer(ZBuffer zBuffer, Col color) {
+        this.zBuffer = zBuffer;
         this.color = color;
     }
 
@@ -27,7 +29,7 @@ public abstract class LineRasterizer {
 
     }
 
-    public void setColor(int color) {
+    public void setColor(Col color) {
         this.color = color;
     }
 }

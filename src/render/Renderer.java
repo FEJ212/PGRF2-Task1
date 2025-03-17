@@ -11,6 +11,7 @@ import view.Panel;
 import java.util.List;
 
 public class Renderer {
+    //TODO: předělat na trivial line algoritmus s checkZBuffer
     private LineRasterizer lineRasterizer;
     private TriangleRasterizer triangleRasterizer;
     private Mat4 view, projection;
@@ -104,8 +105,9 @@ public class Renderer {
             b = temp;
         }
 
-        float zMin = 0.1F;
+        float zMin = 0.0F;
         //ořezávání podle Z
+        //TODO: upravit na Lerp
         if(b.getPosition().getZ() < zMin) { //varianta 2 bodů mimo prostor
             double t1 = (0 - a.getPosition().getZ()) / (b.getPosition().getZ() - a.getPosition().getZ());
             Vertex ab = a.mul(1 - t1).add(b.mul(t1));
@@ -140,14 +142,16 @@ public class Renderer {
     }
     private void transformaceTrojuhelnikuDoOkna(Vertex aOriginal, Vertex bOriginal, Vertex cOriginal){
         Vertex a = dehomogenizace(aOriginal);
+        Vertex b = dehomogenizace(bOriginal);
+        Vertex c = dehomogenizace(cOriginal);
+
         Vec3D vecA = transformaceDoOkna(a.getPosition());
         Vertex aDone = new Vertex(new Point3D(vecA), a.getColor());
 
-        Vertex b = dehomogenizace(bOriginal);
         Vec3D vecB = transformaceDoOkna(b.getPosition());
         Vertex bDone = new Vertex(new Point3D(vecB), b.getColor());
 
-        Vertex c = dehomogenizace(cOriginal);
+
         Vec3D vecC = transformaceDoOkna(c.getPosition());
         Vertex cDone = new Vertex(new Point3D(vecC), c.getColor());
 
@@ -155,10 +159,11 @@ public class Renderer {
     }
     private void transformaceCaryDoOkna(Vertex aOriginal, Vertex bOriginal){
         Vertex a = dehomogenizace(aOriginal);
+        Vertex b = dehomogenizace(bOriginal);
+
         Vec3D vecA = transformaceDoOkna(a.getPosition());
         Vertex aDone = new Vertex(new Point3D(vecA), a.getColor());
 
-        Vertex b = dehomogenizace(bOriginal);
         Vec3D vecB = transformaceDoOkna(b.getPosition());
         Vertex bDone = new Vertex(new Point3D(vecB), b.getColor());
 
