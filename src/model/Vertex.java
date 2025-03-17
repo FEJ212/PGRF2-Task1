@@ -2,7 +2,7 @@ package model;
 
 import transforms.*;
 
-public class Vertex {
+public class Vertex implements Vectorizable<Vertex>{
     private final Point3D position;
     private final Col color;
 
@@ -24,14 +24,6 @@ public class Vertex {
         return color;
     }
 
-    public Vertex mul(double k) {
-        return new Vertex(position.mul(k), color.mul(k));
-    }
-
-    public Vertex add(Vertex v) {
-        return new Vertex(position.add(v.getPosition()), color.add(v.getColor()));
-    }
-
     public double getX(){
         return position.getX();
     }
@@ -43,6 +35,14 @@ public class Vertex {
     }
     public double getW(){
         return position.getW();
+    }
+    @Override
+    public Vertex mul(double k) {
+        return new Vertex(position.mul(k), color.mul(k));
+    }
+    @Override
+    public Vertex add(Vertex v) {
+        return new Vertex(position.add(v.getPosition()), color.add(v.getColor()));
     }
 
 }

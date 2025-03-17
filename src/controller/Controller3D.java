@@ -28,6 +28,7 @@ public class Controller3D {
     private Axis axis;
     private Mat4 model, projection;
     private Camera camera;
+    private Solid arrow;
 
     public Controller3D(Panel panel) {
         this.panel = panel;
@@ -58,6 +59,7 @@ public class Controller3D {
         orthogonal = new Mat4OrthoRH((float)panel.getWidth()/100,(float)panel.getHeight()/100,0.1,20.);
 
         axis = new Axis();
+        arrow = new Arrow();
 
         current = perspective;
         solids = new ArrayList<>();

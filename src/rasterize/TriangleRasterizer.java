@@ -7,6 +7,7 @@ import transforms.Col;
 import transforms.Mat4;
 import transforms.Point3D;
 import transforms.Vec3D;
+import utils.Lerp;
 import view.Panel;
 
 public class TriangleRasterizer {
@@ -15,6 +16,7 @@ public class TriangleRasterizer {
     private final LineRasterizer lineRasterizer;
     private Mat4 model, view, projection;
     private Col color;
+    private Lerp<Vertex> lerp = new Lerp<>();
 
     public TriangleRasterizer(ZBuffer zBuffer, LineRasterizer lineRasterizer,Panel panel) {
         this.zBuffer = zBuffer;
@@ -22,20 +24,7 @@ public class TriangleRasterizer {
         this.panel = panel;
     }
 
-    public void rasterize(Vertex aOriginal, Vertex bOriginal, Vertex cOriginal) {
-        //TODO: dehomogenizace
-        Vertex aDehom = aOriginal;
-        Vertex bDehom = bOriginal;
-        Vertex cDehom = cOriginal;
-        //Transformace do okna
-        Vec3D vecA = transformaceDoOkna(aDehom.getPosition());
-        Vertex a = new Vertex(new Point3D(vecA), aDehom.getColor());
-
-        Vec3D vecB = transformaceDoOkna(bDehom.getPosition());
-        Vertex b = new Vertex(new Point3D(vecB), bDehom.getColor());
-
-        Vec3D vecC = transformaceDoOkna(cDehom.getPosition());
-        Vertex c = new Vertex(new Point3D(vecC), cDehom.getColor());
+    public void rasterize(Vertex a, Vertex b, Vertex c) {
         //seřazení podle Y
         if (a.getY() > b.getY()) {
             Vertex temp = a;
@@ -55,45 +44,67 @@ public class TriangleRasterizer {
         //získání vrcholů pro interpolaci
         int xA = (int) Math.round(a.getPosition().getX());
         int yA = (int) Math.round(a.getPosition().getY());
+        Col cA = a.getColor();
 
         int xB = (int) Math.round(b.getPosition().getX());
         int yB = (int) Math.round(b.getPosition().getY());
+        Col cB = b.getColor();
 
         int xC = (int) Math.round(c.getPosition().getX());
         int yC = (int) Math.round(c.getPosition().getY());
-
+        Col cC = c.getColor();
 
         // První část trojúhelníku
         // TODO: ořezání
         for (int y = yA; y <= yB; y++) {
             double tAB = (y - yA) / (double) (yB - yA);
-            int xAB = (int) Math.round((1 - tAB) * xA + tAB * xB);
-            // TODO: při interpolaci používat lerp, všude v projektu
-            // TODO: instanci lerp nechceme tady
-            // Lerp<Vertex> lerp = new Lerp<>();
-            // Vertex ab = lerp.lerp(a, b, tAB);
-            // Vertex ab = a.mul(1 - tAB).add(b.mul(tAB));
-
+            Vertex ab = lerp.lerp(a, b, tAB);
 
             double tAC = (y - yA) / (double) (yC - yA);
-            int xAC = (int) Math.round((1 - tAC) * xA + tAC * xC);
+            Vertex ac = lerp.lerp(a, c, tAC);
 
-            // for cyklus od x do x
-            // TODO: pozor xAC může být menší než xAB
-            // TODO: ořezání
-            for (int x = xAB; x <= xAC; x++) {
-                // TODo: dopočítat z
-                zBuffer.setPixelWithZTest(x, y, 0.5, color);
+            if(ab.getPosition().getX()>ac.getPosition().getX()) {
+                Vertex temp = ac;
+                ac = ab;
+                ab = temp;
             }
 
-            // TODO: udělat druhu část trojúhelníku
+            // TODO: ořezání
 
+            // for cyklus od x do x
+            interpolaceX(ab,ac,y);
+        }
+        //druhá část trojúhelníku
+        for (int y = yB; y <= yC; y++) {
+            double tBC = (y - yB) / (double) (yC - yB);
+            Vertex bc = lerp.lerp(b, c, tBC);
 
+            double tAC = (y - yA) / (double) (yC - yA);
+            Vertex ac = lerp.lerp(a, c, tAC);
+
+            if(bc.getPosition().getX()>ac.getPosition().getX()) {
+                Vertex temp = ac;
+                ac = bc;
+                bc = temp;
+            }
+
+            // TODO: ořezání
+
+            // for cyklus od x do x
+            interpolaceX(bc,ac,y);
         }
     }
     private Vec3D transformaceDoOkna(Point3D vec) {
         return new Vec3D(vec)
                 .mul(new Vec3D(1, -1, 1)).add(new Vec3D(1, 1, 0))
                 .mul(new Vec3D(panel.getWidth() / 2f, panel.getHeight() / 2f, 1));
+    }
+    private void interpolaceX(Vertex a, Vertex b, int y){
+        for (int x = (int) Math.round(a.getPosition().getX()); x <= b.getPosition().getX(); x++) {
+            double tX = (x - a.getPosition().getX()) / (double) (b.getPosition().getX() - a.getPosition().getX());
+            Vertex ac = lerp.lerp(a, b, tX);
+            zBuffer.setPixelWithZTest(x, y, ac.getZ(), ac.getColor());
+        }
+
     }
 }

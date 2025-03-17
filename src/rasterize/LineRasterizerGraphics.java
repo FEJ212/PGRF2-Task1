@@ -1,6 +1,7 @@
 package rasterize;
 
 import model.Line;
+import model.Vertex;
 import raster.Raster;
 import raster.ImageBuffer;
 
@@ -22,4 +23,10 @@ public class LineRasterizerGraphics extends LineRasterizer {
         g.setColor(new Color(color));
         g.drawLine(line.getX1(), line.getY1(), line.getX2(), line.getY2());
     }
+    public void drawLine(Vertex a, Vertex b){
+        color = a.getColor().getRGB();
+        drawLine(new Line((int)Math.round(a.getPosition().getX()),(int)Math.round(a.getPosition().getY()),(int)Math.round(b.getPosition().getX()),(int)Math.round(a.getPosition().getY())));
+        System.out.println(color);
+    }
+
 }

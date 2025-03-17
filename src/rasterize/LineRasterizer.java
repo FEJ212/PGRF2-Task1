@@ -1,6 +1,7 @@
 package rasterize;
 
 import model.Line;
+import model.Vertex;
 import raster.Raster;
 
 
@@ -20,6 +21,10 @@ public abstract class LineRasterizer {
 
     public void drawLine(Line line) {
         System.out.println("Draw line");
+    }
+
+    public void drawLine(Vertex a, Vertex b) {
+
     }
 
     public void setColor(int color) {
