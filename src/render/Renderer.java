@@ -45,12 +45,12 @@ public class Renderer {
                     }
                     break;
                 case TRIANGLES:
-                    int start = part.getStart();
+                    int triangleStart = part.getStart();
                     for(int i = 0; i < part.getCount(); i++){
-                        int indexA = start;
-                        int indexB = start + 1;
-                        int indexC = start + 2;
-                        start += 3;
+                        int indexA = triangleStart;
+                        int indexB = triangleStart + 1;
+                        int indexC = triangleStart + 2;
+                        triangleStart += 3;
 
                         Vertex a = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexA));
                         Vertex b = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexB));
@@ -59,6 +59,20 @@ public class Renderer {
                         clipTriangle(a, b, c);
                     }
                     break;
+                case FAN:
+                    int fanStart = part.getStart();
+                    for(int i=0; i< part.getCount(); i++){
+                        int indexA = part.getStart();
+                        int indexB = fanStart + 1;
+                        int indexC = fanStart + 2;
+                        fanStart += 3;
+
+                        Vertex a = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexA));
+                        Vertex b = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexB));
+                        Vertex c = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexC));
+
+                        clipTriangle(a, b, c);
+                    }
                 default:
                     break;
             }
@@ -90,9 +104,9 @@ public class Renderer {
             b = temp;
         }
 
-        float zMin = 0;
-
-        if(b.getPosition().getZ() < zMin) {
+        float zMin = 0.1F;
+        //ořezávání podle Z
+        if(b.getPosition().getZ() < zMin) { //varianta 2 bodů mimo prostor
             double t1 = (0 - a.getPosition().getZ()) / (b.getPosition().getZ() - a.getPosition().getZ());
             Vertex ab = a.mul(1 - t1).add(b.mul(t1));
 
@@ -102,7 +116,7 @@ public class Renderer {
             transformaceTrojuhelnikuDoOkna(a, ab, ac);
         }
 
-        if(c.getPosition().getZ() < zMin) {
+        if(c.getPosition().getZ() < zMin) { //1 pod mimo prostor
             double t1 = -a.getPosition().getZ() / (c.getPosition().getZ() - a.getPosition().getZ());
             Vertex ac = a.mul(1 - t1).add(c.mul(t1));
 
@@ -111,33 +125,40 @@ public class Renderer {
 
             transformaceTrojuhelnikuDoOkna(a, b, bc);
             transformaceTrojuhelnikuDoOkna(a, ac, bc);
-        }else {
+        }else { //všechny body v prostoru
             transformaceTrojuhelnikuDoOkna(a, b, c);
         }
+    }
+    private Vertex dehomogenizace(Vertex a){
+        a.mul(1/a.getPosition().getW());
+        return a;
     }
     private Vec3D transformaceDoOkna(Point3D vec) {
         return new Vec3D(vec)
                 .mul(new Vec3D(1, -1, 1)).add(new Vec3D(1, 1, 0))
                 .mul(new Vec3D(panel.getWidth() / 2f, panel.getHeight() / 2f, 1));
     }
-    private void transformaceTrojuhelnikuDoOkna(Vertex a, Vertex b, Vertex c){
-        //TODO: dehomogenizace
+    private void transformaceTrojuhelnikuDoOkna(Vertex aOriginal, Vertex bOriginal, Vertex cOriginal){
+        Vertex a = dehomogenizace(aOriginal);
         Vec3D vecA = transformaceDoOkna(a.getPosition());
         Vertex aDone = new Vertex(new Point3D(vecA), a.getColor());
 
+        Vertex b = dehomogenizace(bOriginal);
         Vec3D vecB = transformaceDoOkna(b.getPosition());
         Vertex bDone = new Vertex(new Point3D(vecB), b.getColor());
 
+        Vertex c = dehomogenizace(cOriginal);
         Vec3D vecC = transformaceDoOkna(c.getPosition());
         Vertex cDone = new Vertex(new Point3D(vecC), c.getColor());
 
         triangleRasterizer.rasterize(aDone,bDone,cDone);
     }
-    private void transformaceCaryDoOkna(Vertex a, Vertex b){
-        //TODO: dehomogenizace
+    private void transformaceCaryDoOkna(Vertex aOriginal, Vertex bOriginal){
+        Vertex a = dehomogenizace(aOriginal);
         Vec3D vecA = transformaceDoOkna(a.getPosition());
         Vertex aDone = new Vertex(new Point3D(vecA), a.getColor());
 
+        Vertex b = dehomogenizace(bOriginal);
         Vec3D vecB = transformaceDoOkna(b.getPosition());
         Vertex bDone = new Vertex(new Point3D(vecB), b.getColor());
 

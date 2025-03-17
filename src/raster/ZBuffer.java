@@ -19,4 +19,7 @@ public class ZBuffer {
             }
         }
     }
+    public void clear(){
+        depthBuffer.clear();
+    }
 }

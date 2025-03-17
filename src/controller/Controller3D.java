@@ -67,24 +67,11 @@ public class Controller3D {
 
     private void redraw() {
         panel.clear();
+        zBuffer.clear();
         renderer.setView(camera.getViewMatrix());
         renderer.setProj(current);
         renderer.renderSolid(new Arrow());
         renderer.renderSolid(axis);
-
-//        triangleRasterizer.rasterize(
-//                new Vertex(new Point3D(400, 0, 0.5)),
-//                new Vertex(new Point3D(0, 300, 0.5)),
-//                new Vertex(new Point3D(799, 300, 0.5)),
-//                new Col(0x00ff00)
-//        );
-//
-//        triangleRasterizer.rasterize(
-//                new Vertex(new Point3D(400, 0, 0.3)),
-//                new Vertex(new Point3D(0, 300, 0.6)),
-//                new Vertex(new Point3D(799, 300, 0.6)),
-//                new Col(0xff0000)
-//        );
 
         panel.repaint();
     }
