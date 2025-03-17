@@ -1,6 +1,7 @@
 package model;
 
 public class Part {
+
     private final int start;
     private final int count;
     private final TopologyType type;

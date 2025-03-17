@@ -1,5 +1,6 @@
 package rasterize;
 
+import model.Line;
 import model.Vertex;
 import raster.ZBuffer;
 import transforms.Col;
@@ -13,6 +14,7 @@ public class TriangleRasterizer {
     private final Panel panel;
     private final LineRasterizer lineRasterizer;
     private Mat4 model, view, projection;
+    private Col color;
 
     public TriangleRasterizer(ZBuffer zBuffer, LineRasterizer lineRasterizer,Panel panel) {
         this.zBuffer = zBuffer;
@@ -20,59 +22,7 @@ public class TriangleRasterizer {
         this.panel = panel;
     }
 
-    public void prepare(Vertex aOriginal, Vertex bOriginal, Vertex cOriginal){
-        //transformace
-        Vertex a = new Vertex(aOriginal.getPosition().mul(model).mul(view).mul(projection), aOriginal.getColor());
-        Vertex b = new Vertex(bOriginal.getPosition().mul(model).mul(view).mul(projection), bOriginal.getColor());
-        Vertex c = new Vertex(cOriginal.getPosition().mul(model).mul(view).mul(projection), cOriginal.getColor());
-        //ořezání vertexů plně mimo raster
-        if (a.getX() > a.getW() && b.getX() > b.getW() && c.getX() > c.getW()) return;
-        if (a.getX() < -a.getW() && b.getX() < -b.getW() && c.getX() < -c.getW()) return;
-        if (a.getY() > a.getW() && b.getY() > b.getW() && c.getY() > c.getW()) return;
-        if (a.getY() < -a.getW() && b.getY() < -b.getW() && c.getY() < -c.getW()) return;
-        if (a.getZ() > a.getW() && b.getZ() > b.getW() && c.getZ() > c.getW()) return;
-        if (a.getZ() < 0 && b.getZ() < 0 && c.getZ() < 0) return;
-        //seřazení vrcholů dle Z pro Z ořezání
-        if (a.getZ() < b.getZ()) {
-            Vertex temp = a;
-            a = b;
-            b = temp;
-        }
-        if (b.getZ() < c.getZ()) {
-            Vertex temp = b;
-            b = c;
-            c = temp;
-        }
-        if (a.getZ() < b.getZ()) {
-            Vertex temp = a;
-            a = b;
-            b = temp;
-        }
-        //ořezání dle Z
-        if(b.getZ()<0){
-            double t1 = (0 - a.getZ()) / (b.getZ() - a.getZ());
-            Vertex ab = a.mul(1 - t1).add(b.mul(t1));
-
-            double t2 = -a.getZ() / (c.getZ() - a.getZ());
-            Vertex ac = a.mul(1 - t2).add(c.mul(t2));
-
-            rasterize(a, ab, ac);
-        } else if (c.getZ() < 0) {
-            double t1 = -a.getZ() / (c.getZ() - a.getZ());
-            Vertex ac = a.mul(1 - t1).add(c.mul(t1));
-
-            double t2 = -b.getZ() / (c.getZ() - b.getZ());
-            Vertex bc = b.mul(1 - t2).add(c.mul(t2));
-
-            rasterize(a, b, bc);
-            rasterize(a, ac, bc);
-        } else {
-            rasterize(a, b, c);
-        }
-
-    }
-
-    public void rasterize(Vertex aOriginal, Vertex bOriginal, Vertex cOriginal){
+    public void rasterize(Vertex aOriginal, Vertex bOriginal, Vertex cOriginal) {
         //TODO: dehomogenizace
         Vertex aDehom = aOriginal;
         Vertex bDehom = bOriginal;
@@ -102,8 +52,44 @@ public class TriangleRasterizer {
             a = b;
             b = temp;
         }
+        //získání vrcholů pro interpolaci
+        int xA = (int) Math.round(a.getPosition().getX());
+        int yA = (int) Math.round(a.getPosition().getY());
+
+        int xB = (int) Math.round(b.getPosition().getX());
+        int yB = (int) Math.round(b.getPosition().getY());
+
+        int xC = (int) Math.round(c.getPosition().getX());
+        int yC = (int) Math.round(c.getPosition().getY());
 
 
+        // První část trojúhelníku
+        // TODO: ořezání
+        for (int y = yA; y <= yB; y++) {
+            double tAB = (y - yA) / (double) (yB - yA);
+            int xAB = (int) Math.round((1 - tAB) * xA + tAB * xB);
+            // TODO: při interpolaci používat lerp, všude v projektu
+            // TODO: instanci lerp nechceme tady
+            // Lerp<Vertex> lerp = new Lerp<>();
+            // Vertex ab = lerp.lerp(a, b, tAB);
+            // Vertex ab = a.mul(1 - tAB).add(b.mul(tAB));
+
+
+            double tAC = (y - yA) / (double) (yC - yA);
+            int xAC = (int) Math.round((1 - tAC) * xA + tAC * xC);
+
+            // for cyklus od x do x
+            // TODO: pozor xAC může být menší než xAB
+            // TODO: ořezání
+            for (int x = xAB; x <= xAC; x++) {
+                // TODo: dopočítat z
+                zBuffer.setPixelWithZTest(x, y, 0.5, color);
+            }
+
+            // TODO: udělat druhu část trojúhelníku
+
+
+        }
     }
     private Vec3D transformaceDoOkna(Point3D vec) {
         return new Vec3D(vec)

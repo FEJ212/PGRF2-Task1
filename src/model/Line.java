@@ -9,6 +9,12 @@ public class Line {
         this.x2 = x2;
         this.y2 = y2;
     }
+    public Line(Vertex v1, Vertex v2) {
+        this.x1 = (int)Math.round(v1.getX());
+        this.y1 = (int)Math.round(v1.getY());
+        this.x2 = (int)Math.round(v2.getX());
+        this.y2 = (int)Math.round(v2.getY());
+    }
 
     public int getX1() {
         return x1;

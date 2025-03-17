@@ -1,33 +1,41 @@
 package render;
 
+import model.Line;
 import model.Part;
 import model.Vertex;
 import rasterize.LineRasterizer;
 import rasterize.TriangleRasterizer;
 import solid.Solid;
-import transforms.Col;
+import transforms.*;
+import view.Panel;
 
 import java.util.List;
 
 public class Renderer {
     private LineRasterizer lineRasterizer;
     private TriangleRasterizer triangleRasterizer;
+    private Mat4 model, view, projection;
+    private Panel panel;
 
     // TODO: view a proj matice
 
-    public Renderer(LineRasterizer lineRasterizer, TriangleRasterizer triangleRasterizer) {
+    public Renderer(LineRasterizer lineRasterizer, TriangleRasterizer triangleRasterizer, Panel panel) {
         this.lineRasterizer = lineRasterizer;
         this.triangleRasterizer = triangleRasterizer;
+        this.panel = panel;
     }
 
     public void renderSolid(Solid solid) {
         // TODO: MVP matice
-        // TODO: transformovat vrcholy
+        //tranformace vrcholů
+        for (Vertex v : solid.getVertexBuffer()) {
+            v.getPosition().mul(model).mul(view).mul(projection);
+        }
 
         for (Part part : solid.getPartBuffer()) {
             switch (part.getType()) {
                 case LINES:
-                    // TODO: lines
+                    //TODO: lines
                     break;
                 case TRIANGLES:
                     // TODO: triangles
@@ -59,26 +67,72 @@ public class Renderer {
 
     // TODo: vymyslet, bude něco vracet nebo rasterizace uvnitř této metody?
     private void clipTriangle(Vertex a, Vertex b, Vertex c) {
-        // TODO: fast clip
-
-        // TODO: ořezání podle z
+        //fast clip
+        if (a.getPosition().getX() > a.getPosition().getW() && b.getPosition().getX() > b.getPosition().getW() && c.getPosition().getX() > c.getPosition().getW()) return;
+        if (a.getPosition().getX() < -a.getPosition().getW() && b.getPosition().getX() < -b.getPosition().getW() && c.getPosition().getX() < -c.getPosition().getW()) return;
+        if (a.getPosition().getY() > a.getPosition().getW() && b.getPosition().getY() > b.getPosition().getW() && c.getPosition().getY() > c.getPosition().getW()) return;
+        if (a.getPosition().getY() < -a.getPosition().getW() && b.getPosition().getY() < -b.getPosition().getW() && c.getPosition().getY() < -c.getPosition().getW()) return;
+        if (a.getPosition().getZ() > a.getPosition().getW() && b.getPosition().getZ() > b.getPosition().getW() && c.getPosition().getZ() > c.getPosition().getW()) return;
+        if (a.getPosition().getZ() < 0 && b.getPosition().getZ() < 0 && c.getPosition().getZ() < 0) return;
+        //TODO: zahrnout zMin
         float zMin = 0;
         // 1. seřadit vrcholy pod z od max po min. A = max
-        if(a.getPosition().getZ() < zMin)
-            return;
+        if (a.getPosition().getZ() < b.getPosition().getZ()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
+        }
+        if (b.getPosition().getZ() < c.getPosition().getZ()) {
+            Vertex temp = b;
+            b = c;
+            c = temp;
+        }
+        if (a.getPosition().getZ() < b.getPosition().getZ()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
+        }
 
         if(b.getPosition().getZ() < zMin) {
-            // TODO: interpolací spočítáme nový trojúhelník
-            //triangleRasterizer.rasterize(a, ab, ac);
-            return;
+            double t1 = (0 - a.getPosition().getZ()) / (b.getPosition().getZ() - a.getPosition().getZ());
+            Vertex ab = a.mul(1 - t1).add(b.mul(t1));
+
+            double t2 = -a.getPosition().getZ() / (c.getPosition().getZ() - a.getPosition().getZ());
+            Vertex ac = a.mul(1 - t2).add(c.mul(t2));
+
+            triangleRasterizer.rasterize(a, ab, ac);
         }
 
         if(c.getPosition().getZ() < zMin) {
-            // TODO: interpolací spočítáme 2 nové trojúhelníky a rasterizujeme
-            return;
+            double t1 = -a.getPosition().getZ() / (c.getPosition().getZ() - a.getPosition().getZ());
+            Vertex ac = a.mul(1 - t1).add(c.mul(t1));
+
+            double t2 = -b.getPosition().getZ() / (c.getPosition().getZ() - b.getPosition().getZ());
+            Vertex bc = b.mul(1 - t2).add(c.mul(t2));
+
+            triangleRasterizer.rasterize(a, b, bc);
+            triangleRasterizer.rasterize(a, ac, bc);
+        }else {
+            triangleRasterizer.rasterize(a, b, c);
         }
+    }
+    private Vec3D transformToScreen(Vec3D point){
+        return point.mul(new Vec3D(1, -1, 1)).add(new Vec3D(1, 1, 0)).mul(new Vec3D((panel.getWidth()-1)/2., (panel.getHeight()-1)/2., 1));
+    }
+    public void renderSolids(List<Solid> solids){
+        for (Solid solid : solids) {
+            renderSolid(solid);
+        }
+    }
+    public void setLineRasterizer(LineRasterizer lineRasterizer) {
+        this.lineRasterizer = lineRasterizer;
+    }
 
-        // TODO: Nic z předchozího neplatí, rasterizujeme původné trojúhelník
+    public void setView(Mat4 view) {
+        this.view = view;
+    }
 
+    public void setProj(Mat4 projection) {
+        this.projection = projection;
     }
 }
