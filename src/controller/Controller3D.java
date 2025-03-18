@@ -5,14 +5,17 @@ import rasterize.LineRasterizer;
 import rasterize.LineRasterizerTrivial;
 import rasterize.TriangleRasterizer;
 import render.Renderer;
-import solid.Arrow;
-import solid.Axis;
-import solid.Cube;
-import solid.Solid;
+import shader.Shader;
+import shader.ShaderTexture;
+import solid.*;
 import transforms.*;
 import view.Panel;
 
+import javax.imageio.ImageIO;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller3D {
@@ -25,17 +28,25 @@ public class Controller3D {
     private ArrayList<Solid> solids;
     private Axis axis;
     private Camera camera;
-    private Solid arrow, cube;
+    private Solid arrow, cube, pyramid;
     private int startX, startY;
     private int selectedIndex = -1;
     private String objectId = "";
+    private Shader shader;
+    private final BufferedImage texture;
 
     public Controller3D(Panel panel) {
         this.panel = panel;
         this.zBuffer = new ZBuffer(panel.getRaster());
         this.lineRasterizer = new LineRasterizerTrivial(zBuffer);
-        this.triangleRasterizer = new TriangleRasterizer(zBuffer);
+        this.triangleRasterizer = new TriangleRasterizer(zBuffer, shader);
         this.renderer = new Renderer(lineRasterizer, triangleRasterizer, panel);
+        try {
+            this.texture = ImageIO.read(new File("./res/johnny.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        this.shader = new ShaderTexture();
 
         initListeners();
         initScene();
@@ -118,6 +129,9 @@ public class Controller3D {
                             objectId = "";
                         }
                         break;
+                    case KeyEvent.VK_T:
+                        triangleRasterizer.setShader(shader);
+                        break;
                 }
                 redraw();
                 if(objectId.equals("CUBE")){
@@ -134,14 +148,23 @@ public class Controller3D {
 
         axis = new Axis();
         arrow = new Arrow();
+        arrow.setModel(arrow.decreaseZ());
+
         cube = new Cube();
         cube.setModel(cube.increaseY());
+        cube.setModel(cube.increaseX());
+        pyramid = new Pyramid();
+        for (int i = 0; i<2; i++){
+            pyramid.setModel(pyramid.increaseX());
+            pyramid.setModel(pyramid.decreaseY());
+        }
 
 
         current = perspective;
         solids = new ArrayList<>();
         solids.add(arrow);
         solids.add(cube);
+        solids.add(pyramid);
     }
 
     private void redraw() {
@@ -149,7 +172,9 @@ public class Controller3D {
         zBuffer.clear();
         renderer.setView(camera.getViewMatrix());
         renderer.setProj(current);
+        renderer.renderSolid(axis);
         renderer.renderSolids(solids);
+
 
         panel.repaint();
     }

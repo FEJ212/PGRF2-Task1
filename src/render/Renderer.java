@@ -134,12 +134,10 @@ public class Renderer {
     }
     private Vertex dehomogenizace(Vertex a){
         double w = a.getPosition().getW();
-        Point3D b = a.getPosition();
         if(w>0){
-            b = b.mul(1/w);
+            a = a.mul(1/w);
         }
-        Vertex c = new Vertex(b,a.getColor());
-        return c;
+        return new Vertex(a.getPosition(),a.getColor().mul(1/a.getOne()),a.getUV().mul(1/a.getOne()));
     }
     private Vec3D transformaceDoOkna(Point3D vec) {
         return new Vec3D(vec)

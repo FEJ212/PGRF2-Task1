@@ -3,6 +3,7 @@ package rasterize;
 import model.Line;
 import model.Vertex;
 import raster.ZBuffer;
+import shader.Shader;
 import transforms.Col;
 import transforms.Mat4;
 import transforms.Point3D;
@@ -10,30 +11,34 @@ import transforms.Vec3D;
 import utils.Lerp;
 import view.Panel;
 
+import java.awt.image.BufferedImage;
+
 public class TriangleRasterizer {
     private final ZBuffer zBuffer;
     private Lerp<Vertex> lerp = new Lerp<>();
     private int maxWidth, maxHeight;
+    private Shader shader;
 
-    public TriangleRasterizer(ZBuffer zBuffer) {
+    public TriangleRasterizer(ZBuffer zBuffer, Shader shader) {
         this.zBuffer = zBuffer;
         this.maxWidth = zBuffer.getWidth();
         this.maxHeight = zBuffer.getHeight();
+        this.shader = shader;
     }
 
     public void rasterize(Vertex a, Vertex b, Vertex c) {
         //seřazení podle Y
-        if (a.getY() > b.getY()) {
+        if (a.getPosition().getY() > b.getPosition().getY()) {
             Vertex temp = a;
             a = b;
             b = temp;
         }
-        if (b.getY() > c.getY()) {
+        if (b.getPosition().getY() > c.getPosition().getY()) {
             Vertex temp = b;
             b = c;
             c = temp;
         }
-        if (a.getY() > b.getY()) {
+        if (a.getPosition().getY() > b.getPosition().getY()) {
             Vertex temp = a;
             a = b;
             b = temp;
@@ -93,5 +98,8 @@ public class TriangleRasterizer {
             zBuffer.setPixelWithZTest(x, y, ac.getPosition().getZ(), ac.getColor());
         }
 
+    }
+    public void setShader(Shader shader){
+        this.shader = shader;
     }
 }

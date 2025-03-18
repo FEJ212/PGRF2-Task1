@@ -17,7 +17,7 @@ public class Cube extends Solid{
         vertexBuffer.add(new Vertex(new Point3D(0.5,-0.5,0),new Col(0x0000ff)));//5
         vertexBuffer.add(new Vertex(new Point3D(-0.5,0.5,0),new Col(0xffffff)));//6
         vertexBuffer.add(new Vertex(new Point3D(0.5,0.5,0),new Col(0xb00b69)));//7
-        //TODO: opravit indexy
+
         indexBuffer.add(0);
         indexBuffer.add(4);
         indexBuffer.add(5);

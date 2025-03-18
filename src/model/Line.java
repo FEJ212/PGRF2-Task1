@@ -10,10 +10,10 @@ public class Line {
         this.y2 = y2;
     }
     public Line(Vertex v1, Vertex v2) {
-        this.x1 = (int)Math.round(v1.getX());
-        this.y1 = (int)Math.round(v1.getY());
-        this.x2 = (int)Math.round(v2.getX());
-        this.y2 = (int)Math.round(v2.getY());
+        this.x1 = (int)Math.round(v1.getPosition().getX());
+        this.y1 = (int)Math.round(v1.getPosition().getY());
+        this.x2 = (int)Math.round(v2.getPosition().getX());
+        this.y2 = (int)Math.round(v2.getPosition().getY());
     }
 
     public int getX1() {

@@ -4,14 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Giga bug fix">
+    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Cube a mlha fixed">
+      <change afterPath="$PROJECT_DIR$/src/shader/Shader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shader/ShaderConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shader/ShaderInterpolar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shader/ShaderTexture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/solid/Pyramid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PGRF2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PGRF2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/Controller3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller3D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Line.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/TopologyType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TopologyType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raster/ZBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/raster/ZBuffer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rasterize/LineRasterizerTrivial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/LineRasterizerTrivial.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Vertex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/render/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/solid/Arrow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Arrow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/solid/Axis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Axis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/solid/Cube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Cube.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +30,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -93,7 +102,7 @@
       <workItem from="1740585360988" duration="13000" />
       <workItem from="1742147945691" duration="7895000" />
       <workItem from="1742193968181" duration="22231000" />
-      <workItem from="1742282308519" duration="10283000" />
+      <workItem from="1742282308519" duration="17946000" />
     </task>
     <task id="LOCAL-00001" summary="Project creation">
       <option name="closed" value="true" />
@@ -207,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742288611979</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Cube a mlha fixed">
+      <option name="closed" value="true" />
+      <created>1742294602949</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1742294602949</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,6 +256,7 @@
     <MESSAGE value="Vytvoření solidu Cube, implementace kamery a ovládání" />
     <MESSAGE value="MVP implementace" />
     <MESSAGE value="Giga bug fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Giga bug fix" />
+    <MESSAGE value="Cube a mlha fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cube a mlha fixed" />
   </component>
 </project>
