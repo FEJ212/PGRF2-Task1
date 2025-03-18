@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Vytvoření solidu Cube, implementace kamery a ovládání">
+    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="MVP implementace">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/Controller3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller3D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/render/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/solid/Cube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Cube.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/solid/Arrow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Arrow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +89,7 @@
       <workItem from="1740585360988" duration="13000" />
       <workItem from="1742147945691" duration="7895000" />
       <workItem from="1742193968181" duration="22231000" />
-      <workItem from="1742282308519" duration="4235000" />
+      <workItem from="1742282308519" duration="5503000" />
     </task>
     <task id="LOCAL-00001" summary="Project creation">
       <option name="closed" value="true" />
@@ -189,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742232379606</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="MVP implementace">
+      <option name="closed" value="true" />
+      <created>1742286952542</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1742286952542</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,6 +225,7 @@
     <MESSAGE value="Triangle Rasterizer a renderer update" />
     <MESSAGE value="Dehomogenizace a FAN primitiva" />
     <MESSAGE value="Vytvoření solidu Cube, implementace kamery a ovládání" />
-    <option name="LAST_COMMIT_MESSAGE" value="Vytvoření solidu Cube, implementace kamery a ovládání" />
+    <MESSAGE value="MVP implementace" />
+    <option name="LAST_COMMIT_MESSAGE" value="MVP implementace" />
   </component>
 </project>

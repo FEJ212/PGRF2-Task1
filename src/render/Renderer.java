@@ -9,6 +9,7 @@ import solid.Axis;
 import solid.Cube;
 import solid.Solid;
 import transforms.*;
+import utils.Lerp;
 import view.Panel;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Renderer {
     private TriangleRasterizer triangleRasterizer;
     private Mat4 view, projection;
     private Panel panel;
+    private Lerp lerp;
 
     public Renderer(LineRasterizer lineRasterizer, TriangleRasterizer triangleRasterizer, Panel panel) {
         this.lineRasterizer = lineRasterizer;
@@ -26,6 +28,7 @@ public class Renderer {
         this.panel = panel;
         this.view = new Mat4Identity();
         this.projection = new Mat4Identity();
+        lerp = new Lerp();
     }
 
     public void renderSolid(Solid solid) {
@@ -107,23 +110,22 @@ public class Renderer {
 
         float zMin = 0.0F;
         //ořezávání podle Z
-        //TODO: upravit na Lerp
         if(b.getPosition().getZ() < zMin) { //varianta 2 bodů mimo prostor
             double t1 = (0 - a.getPosition().getZ()) / (b.getPosition().getZ() - a.getPosition().getZ());
-            Vertex ab = a.mul(1 - t1).add(b.mul(t1));
+            Vertex ab = (Vertex)lerp.lerp(b,a,t1);
 
             double t2 = -a.getPosition().getZ() / (c.getPosition().getZ() - a.getPosition().getZ());
-            Vertex ac = a.mul(1 - t2).add(c.mul(t2));
+            Vertex ac = (Vertex)lerp.lerp(c,a,t2);
 
             transformaceTrojuhelnikuDoOkna(a, ab, ac);
         }
 
         if(c.getPosition().getZ() < zMin) { //1 pod mimo prostor
             double t1 = -a.getPosition().getZ() / (c.getPosition().getZ() - a.getPosition().getZ());
-            Vertex ac = a.mul(1 - t1).add(c.mul(t1));
+            Vertex ac = (Vertex)lerp.lerp(c,a,t1);
 
             double t2 = -b.getPosition().getZ() / (c.getPosition().getZ() - b.getPosition().getZ());
-            Vertex bc = b.mul(1 - t2).add(c.mul(t2));
+            Vertex bc = (Vertex)lerp.lerp(c,b,t2);
 
             transformaceTrojuhelnikuDoOkna(a, b, bc);
             transformaceTrojuhelnikuDoOkna(a, ac, bc);
@@ -132,7 +134,10 @@ public class Renderer {
         }
     }
     private Vertex dehomogenizace(Vertex a){
-        a.mul(1/a.getPosition().getW());
+        double w = a.getPosition().getW();
+        if(w>0){
+            a = a.mul(1/w);
+        }
         return a;
     }
     private Vec3D transformaceDoOkna(Point3D vec) {

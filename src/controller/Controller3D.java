@@ -24,7 +24,6 @@ public class Controller3D {
     private Mat4 perspective, orthogonal, current;
     private ArrayList<Solid> solids;
     private Axis axis;
-    private Mat4 model, projection;
     private Camera camera;
     private Solid arrow, cube;
     private int startX, startY;
@@ -45,7 +44,7 @@ public class Controller3D {
     }
 
     private void initListeners() {
-        panel.addMouseMotionListener(new MouseAdapter() {
+        panel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 startX = e.getX();
                 startY = e.getY();
