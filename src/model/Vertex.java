@@ -3,7 +3,7 @@ package model;
 import transforms.*;
 
 public class Vertex implements Vectorizable<Vertex>{
-    private final Point3D position;
+    private Point3D position;
     private final Col color;
 
     public Vertex(Point3D position, Col color) {

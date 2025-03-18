@@ -4,31 +4,40 @@ import model.Part;
 import model.Vertex;
 import rasterize.LineRasterizer;
 import rasterize.TriangleRasterizer;
+import solid.Arrow;
+import solid.Axis;
+import solid.Cube;
 import solid.Solid;
 import transforms.*;
 import view.Panel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {
-    //TODO: předělat na trivial line algoritmus s checkZBuffer
     private LineRasterizer lineRasterizer;
     private TriangleRasterizer triangleRasterizer;
     private Mat4 view, projection;
     private Panel panel;
 
-    // TODO: view a proj matice
-
     public Renderer(LineRasterizer lineRasterizer, TriangleRasterizer triangleRasterizer, Panel panel) {
         this.lineRasterizer = lineRasterizer;
         this.triangleRasterizer = triangleRasterizer;
         this.panel = panel;
+        this.view = new Mat4Identity();
+        this.projection = new Mat4Identity();
     }
 
     public void renderSolid(Solid solid) {
         //tranformace vrcholů
-        for (Vertex v : solid.getVertexBuffer()) {
-            v.getPosition().mul(solid.getModel()).mul(view).mul(projection);
+        //TODO: opravit
+        List<Integer> iB = solid.getIndexBuffer();
+        List<Vertex> transformovaneVrcholy = new ArrayList<>();
+
+        for (int i = 0; i<solid.getVertexBuffer().size(); i++) {
+            //Vertex transformovano = new Vertex(solid.getVertexBuffer().get(i).getPosition(),solid.getVertexBuffer().get(i).getColor());
+            Vertex transformovano = new Vertex(solid.getVertexBuffer().get(i).getPosition().mul(solid.getModel()).mul(view).mul(projection), solid.getVertexBuffer().get(i).getColor());
+            transformovaneVrcholy.add(transformovano);
         }
 
         for (Part part : solid.getPartBuffer()) {
@@ -36,11 +45,10 @@ public class Renderer {
                 case LINES:
                     int lineStart = part.getStart();
                     for (int i=0; i< part.getCount(); i++){
-                        int indexA  = lineStart + i;
-                        int indexB = lineStart + i + 1;
+                        Vertex a = transformovaneVrcholy.get(iB.get(lineStart));
+                        Vertex b = transformovaneVrcholy.get(iB.get(lineStart+1));
                         lineStart+=2;
-                        Vertex a = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexA));
-                        Vertex b = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexB));
+
                         //TODO: ořezání
                         transformaceCaryDoOkna(a,b);
                     }
@@ -48,14 +56,10 @@ public class Renderer {
                 case TRIANGLES:
                     int triangleStart = part.getStart();
                     for(int i = 0; i < part.getCount(); i++){
-                        int indexA = triangleStart;
-                        int indexB = triangleStart + 1;
-                        int indexC = triangleStart + 2;
+                        Vertex a = transformovaneVrcholy.get(iB.get(triangleStart));
+                        Vertex b = transformovaneVrcholy.get(iB.get(triangleStart+1));
+                        Vertex c = transformovaneVrcholy.get(iB.get(triangleStart+2));
                         triangleStart += 3;
-
-                        Vertex a = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexA));
-                        Vertex b = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexB));
-                        Vertex c = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexC));
 
                         clipTriangle(a, b, c);
                     }
@@ -63,14 +67,10 @@ public class Renderer {
                 case FAN:
                     int fanStart = part.getStart();
                     for(int i=0; i< part.getCount(); i++){
-                        int indexA = part.getStart();
-                        int indexB = fanStart + 1;
-                        int indexC = fanStart + 2;
+                        Vertex a = transformovaneVrcholy.get(iB.get(part.getStart()));
+                        Vertex b = transformovaneVrcholy.get(iB.get(fanStart+1));
+                        Vertex c = transformovaneVrcholy.get(iB.get(fanStart+2));
                         fanStart += 3;
-
-                        Vertex a = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexA));
-                        Vertex b = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexB));
-                        Vertex c = solid.getVertexBuffer().get(solid.getIndexBuffer().get(indexC));
 
                         clipTriangle(a, b, c);
                     }

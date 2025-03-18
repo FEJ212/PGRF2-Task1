@@ -5,6 +5,7 @@ import rasterize.LineRasterizer;
 import rasterize.LineRasterizerTrivial;
 import rasterize.TriangleRasterizer;
 import render.Renderer;
+import solid.Arrow;
 import solid.Axis;
 import solid.Cube;
 import solid.Solid;
@@ -55,7 +56,7 @@ public class Controller3D {
             public void mouseDragged(MouseEvent e) {
                 camera = camera.addAzimuth(Math.PI*(e.getX()-startX)/(double)panel.getWidth());
                 camera = camera.addZenith(Math.PI*(e.getY()-startY)/(double)panel.getHeight());
-
+                //blokování přetočení kamery
                 if(camera.getZenith()>90){
                     camera = camera.withZenith(90);
                 }
@@ -133,16 +134,14 @@ public class Controller3D {
         orthogonal = new Mat4OrthoRH((float)panel.getWidth()/100,(float)panel.getHeight()/100,0.1,20.);
 
         axis = new Axis();
-        //arrow = new Arrow();
+        arrow = new Arrow();
         cube = new Cube();
-        for (int i = 0; i<2; i++) {
-            cube.setModel(cube.increaseX());
-            cube.setModel(cube.increaseY());
-        }
+        cube.setModel(cube.increaseY());
 
-        current = perspective;
+
+        current = orthogonal;
         solids = new ArrayList<>();
-        //solids.add(arrow);
+        solids.add(arrow);
         solids.add(cube);
     }
 
