@@ -5,7 +5,7 @@ import model.Vertex;
 import raster.Raster;
 import raster.ZBuffer;
 import transforms.Col;
-//TODO: implementovat výpočet Z
+//TODO: implementovat interpolaci barev
 //Algoritmus pro vlastní rasterizaci čáry
 public class LineRasterizerTrivial extends LineRasterizer{
     //konstruktor bez specifikování barvy
@@ -23,6 +23,7 @@ public class LineRasterizerTrivial extends LineRasterizer{
         int x1 = (int)Math.round(a.getPosition().getX());
         int y1 = (int)Math.round(a.getPosition().getY());
         double z = a.getPosition().getZ();
+        color = a.getColor();
         int x2 = (int)Math.round(b.getPosition().getX());
         int y2 = (int)Math.round(b.getPosition().getY());
         double z2 = b.getPosition().getZ();

@@ -34,7 +34,7 @@ public class Controller3D {
         this.panel = panel;
         this.zBuffer = new ZBuffer(panel.getRaster());
         this.lineRasterizer = new LineRasterizerTrivial(zBuffer);
-        this.triangleRasterizer = new TriangleRasterizer(zBuffer, lineRasterizer, panel);
+        this.triangleRasterizer = new TriangleRasterizer(zBuffer);
         this.renderer = new Renderer(lineRasterizer, triangleRasterizer, panel);
 
         initListeners();
@@ -138,7 +138,7 @@ public class Controller3D {
         cube.setModel(cube.increaseY());
 
 
-        current = orthogonal;
+        current = perspective;
         solids = new ArrayList<>();
         solids.add(arrow);
         solids.add(cube);

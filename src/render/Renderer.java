@@ -33,7 +33,6 @@ public class Renderer {
 
     public void renderSolid(Solid solid) {
         //tranformace vrcholů
-        //TODO: opravit
         List<Integer> iB = solid.getIndexBuffer();
         List<Vertex> transformovaneVrcholy = new ArrayList<>();
 
@@ -68,12 +67,12 @@ public class Renderer {
                     }
                     break;
                 case FAN:
-                    int fanStart = part.getStart();
-                    for(int i=0; i< part.getCount(); i++){
+                    int fanStart = part.getStart()+1;
+                    for(int i=0; i<part.getCount(); i++){
                         Vertex a = transformovaneVrcholy.get(iB.get(part.getStart()));
-                        Vertex b = transformovaneVrcholy.get(iB.get(fanStart+1));
-                        Vertex c = transformovaneVrcholy.get(iB.get(fanStart+2));
-                        fanStart += 3;
+                        Vertex b = transformovaneVrcholy.get(iB.get(fanStart));
+                        Vertex c = transformovaneVrcholy.get(iB.get(fanStart+1));
+                        fanStart += 2;
 
                         clipTriangle(a, b, c);
                     }
@@ -135,10 +134,12 @@ public class Renderer {
     }
     private Vertex dehomogenizace(Vertex a){
         double w = a.getPosition().getW();
+        Point3D b = a.getPosition();
         if(w>0){
-            a = a.mul(1/w);
+            b = b.mul(1/w);
         }
-        return a;
+        Vertex c = new Vertex(b,a.getColor());
+        return c;
     }
     private Vec3D transformaceDoOkna(Point3D vec) {
         return new Vec3D(vec)
