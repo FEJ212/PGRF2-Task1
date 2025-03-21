@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="">
+    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Implementace ovládání transformací">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/Controller3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller3D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/solid/Arrow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Arrow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/solid/Pyramid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Pyramid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Vertex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +91,7 @@
       <workItem from="1742193968181" duration="22231000" />
       <workItem from="1742282308519" duration="18257000" />
       <workItem from="1742373008318" duration="1384000" />
+      <workItem from="1742565904524" duration="128000" />
     </task>
     <task id="LOCAL-00001" summary="Project creation">
       <option name="closed" value="true" />
@@ -229,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742315654316</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Implementace ovládání transformací">
+      <option name="closed" value="true" />
+      <created>1742565831740</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1742565831740</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,6 +272,7 @@
     <MESSAGE value="Cube a mlha fixed" />
     <MESSAGE value="Cviko 5, osy x,y,z, příprava na shadery a textury, příprava na korektní vykreslování barev v perspektivě" />
     <MESSAGE value="testovací textura" />
-    <option name="LAST_COMMIT_MESSAGE" value="testovací textura" />
+    <MESSAGE value="Implementace ovládání transformací" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementace ovládání transformací" />
   </component>
 </project>

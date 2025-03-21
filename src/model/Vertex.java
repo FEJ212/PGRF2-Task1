@@ -7,7 +7,7 @@ public class Vertex implements Vectorizable<Vertex>{
     private final Col color;
     private final Vec2D uv;
     private double one;
-    //TODO: doimplementovat ONE do lerpu a následně po dehomogenizaci pronásobit vše kromě pozice 1/ONE
+
     public Vertex(Point3D position, Col color) {
         this.position = position;
         this.color = color;

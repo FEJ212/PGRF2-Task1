@@ -18,7 +18,7 @@ public class TriangleRasterizer {
     private Lerp<Vertex> lerp = new Lerp<>();
     private int maxWidth, maxHeight;
     private Shader shader;
-
+    //TODO: opravit one za transformaci do obrazovky
     public TriangleRasterizer(ZBuffer zBuffer, Shader shader) {
         this.zBuffer = zBuffer;
         this.maxWidth = zBuffer.getWidth();
