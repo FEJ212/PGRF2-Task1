@@ -1,12 +1,14 @@
 package controller;
 
+import model.Vertex;
 import raster.ZBuffer;
 import rasterize.LineRasterizer;
 import rasterize.LineRasterizerTrivial;
 import rasterize.TriangleRasterizer;
 import render.Renderer;
 import shader.Shader;
-import shader.ShaderTexture;
+import shader.ShaderConstant;
+import shader.ShaderInterpolar;
 import solid.*;
 import transforms.*;
 import view.Panel;
@@ -32,21 +34,20 @@ public class Controller3D {
     private int startX, startY;
     private int selectedIndex = -1;
     private String objectId = "";
-    private Shader shader;
     private final BufferedImage texture;
+    private boolean shading = false;
 
     public Controller3D(Panel panel) {
         this.panel = panel;
         this.zBuffer = new ZBuffer(panel.getRaster());
         this.lineRasterizer = new LineRasterizerTrivial(zBuffer);
-        this.triangleRasterizer = new TriangleRasterizer(zBuffer, shader);
+        this.triangleRasterizer = new TriangleRasterizer(zBuffer, new ShaderInterpolar());
         this.renderer = new Renderer(lineRasterizer, triangleRasterizer, panel);
         try {
             this.texture = ImageIO.read(new File("./res/johnny.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.shader = new ShaderTexture();
 
         initListeners();
         initScene();
@@ -130,7 +131,24 @@ public class Controller3D {
                         }
                         break;
                     case KeyEvent.VK_T:
-                        triangleRasterizer.setShader(shader);
+                        Shader shader = new Shader(){
+                            @Override
+                            public Col getColor(Vertex pixel){
+                                int x = (int) Math.round(pixel.getUV().getX())*texture.getWidth();
+                                int y = (int) Math.round(texture.getHeight()-pixel.getUV().getY()*texture.getHeight());
+                                if (x>0&&y>0&&x<texture.getWidth()&&y<texture.getHeight()) {
+                                    return new Col(texture.getRGB(x, y));
+                                } else {
+                                    return new Col(0xff0000);
+                                }
+                            }
+                        };
+                        if(!shading) {
+                            triangleRasterizer.setShader(shader);
+                        } else {
+                            triangleRasterizer.setShader(new ShaderInterpolar());
+                        }
+                        redraw();
                         break;
                 }
                 redraw();

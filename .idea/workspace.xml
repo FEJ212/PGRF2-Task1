@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Implementace ovládání transformací">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Vertex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/Controller3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller3D.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/render/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shader/Shader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shader/Shader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shader/ShaderConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shader/ShaderConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shader/ShaderInterpolar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/shader/ShaderInterpolar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shader/ShaderTexture.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +97,7 @@
       <workItem from="1742282308519" duration="18257000" />
       <workItem from="1742373008318" duration="1384000" />
       <workItem from="1742565904524" duration="128000" />
+      <workItem from="1742575618233" duration="1776000" />
     </task>
     <task id="LOCAL-00001" summary="Project creation">
       <option name="closed" value="true" />

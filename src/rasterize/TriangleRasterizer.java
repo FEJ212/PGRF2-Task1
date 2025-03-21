@@ -18,7 +18,7 @@ public class TriangleRasterizer {
     private Lerp<Vertex> lerp = new Lerp<>();
     private int maxWidth, maxHeight;
     private Shader shader;
-    //TODO: opravit one za transformaci do obrazovky
+
     public TriangleRasterizer(ZBuffer zBuffer, Shader shader) {
         this.zBuffer = zBuffer;
         this.maxWidth = zBuffer.getWidth();
@@ -95,7 +95,7 @@ public class TriangleRasterizer {
         for (int x = Math.max(x1,1); x <= Math.min(x2,maxWidth); x++) {
             double tX = (x - x1) / (double) (x2 - x1);
             Vertex ac = (Vertex) lerp.lerp(a, b, tX);
-            zBuffer.setPixelWithZTest(x, y, ac.getPosition().getZ(), ac.getColor());
+            zBuffer.setPixelWithZTest(x, y, ac.getPosition().getZ(), shader.getColor(ac));
         }
 
     }

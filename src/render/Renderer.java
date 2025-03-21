@@ -50,8 +50,6 @@ public class Renderer {
                         Vertex a = transformovaneVrcholy.get(iB.get(lineStart));
                         Vertex b = transformovaneVrcholy.get(iB.get(lineStart+1));
                         lineStart+=2;
-
-                        //TODO: ořezání
                         transformaceCaryDoOkna(a,b);
                     }
                     break;
@@ -137,7 +135,7 @@ public class Renderer {
         if(w>0){
             a = a.mul(1/w);
         }
-        return new Vertex(a.getPosition(),a.getColor().mul(1/a.getOne()),a.getUV().mul(1/a.getOne()));
+        return a;
     }
     private Vec3D transformaceDoOkna(Point3D vec) {
         return new Vec3D(vec)
@@ -150,14 +148,16 @@ public class Renderer {
         Vertex c = dehomogenizace(cOriginal);
 
         Vec3D vecA = transformaceDoOkna(a.getPosition());
-        Vertex aDone = new Vertex(new Point3D(vecA), a.getColor());
+        Vertex aNew = new Vertex(new Point3D(vecA), a.getColor(), a.getUV(), a.getOne());
+        Vertex aDone = projekcniKorekce(aNew);
 
         Vec3D vecB = transformaceDoOkna(b.getPosition());
-        Vertex bDone = new Vertex(new Point3D(vecB), b.getColor());
-
+        Vertex bNew = new Vertex(new Point3D(vecB), b.getColor(), b.getUV(), b.getOne());
+        Vertex bDone = projekcniKorekce(bNew);
 
         Vec3D vecC = transformaceDoOkna(c.getPosition());
-        Vertex cDone = new Vertex(new Point3D(vecC), c.getColor());
+        Vertex cNew = new Vertex(new Point3D(vecC), c.getColor(), c.getUV(), c.getOne());
+        Vertex cDone = projekcniKorekce(cNew);
 
         triangleRasterizer.rasterize(aDone,bDone,cDone);
     }
@@ -166,12 +166,17 @@ public class Renderer {
         Vertex b = dehomogenizace(bOriginal);
 
         Vec3D vecA = transformaceDoOkna(a.getPosition());
-        Vertex aDone = new Vertex(new Point3D(vecA), a.getColor());
+        Vertex aNew = new Vertex(new Point3D(vecA), a.getColor(), a.getUV(), a.getOne());
+        Vertex aDone = projekcniKorekce(aNew);
 
         Vec3D vecB = transformaceDoOkna(b.getPosition());
-        Vertex bDone = new Vertex(new Point3D(vecB), b.getColor());
+        Vertex bNew = new Vertex(new Point3D(vecB), b.getColor(), b.getUV(), b.getOne());
+        Vertex bDone = projekcniKorekce(bNew);
 
         lineRasterizer.drawLine(aDone,bDone);
+    }
+    private Vertex projekcniKorekce(Vertex a){
+        return new Vertex(a.getPosition(),a.getColor().mul(1/a.getOne()),a.getUV().mul(1/a.getOne()));
     }
     public void renderSolids(List<Solid> solids){
         for (Solid solid : solids) {

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class ShaderConstant implements Shader{
     @Override
-    public Col getColor(Vertex pixel, BufferedImage texture) {
+    public Col getColor(Vertex pixel) {
         return new Col(0xb00b69);
     }
 }

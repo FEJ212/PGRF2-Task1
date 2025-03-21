@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class ShaderInterpolar implements Shader{
     @Override
-    public Col getColor(Vertex pixel, BufferedImage texture){
+    public Col getColor(Vertex pixel){
         return pixel.getColor();
     }
 }
