@@ -4,23 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="Cube a mlha fixed">
-      <change afterPath="$PROJECT_DIR$/src/shader/Shader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shader/ShaderConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shader/ShaderInterpolar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shader/ShaderTexture.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/solid/Pyramid.java" afterDir="false" />
+    <list default="true" id="9903cffd-66e7-467b-bd1c-f3bd260c95bf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PGRF2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PGRF2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/Controller3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Controller3D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Line.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TopologyType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TopologyType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Vertex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/TriangleRasterizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/render/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/render/Renderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/solid/Arrow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Arrow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/solid/Axis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Axis.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/solid/Cube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Cube.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/solid/Pyramid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/solid/Pyramid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,22 +35,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Application.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/SKOLA/PGRF1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Unnamed.executor": "Run",
+    "Application.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/SKOLA/PGRF2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="rasterize" />
@@ -102,7 +90,8 @@
       <workItem from="1740585360988" duration="13000" />
       <workItem from="1742147945691" duration="7895000" />
       <workItem from="1742193968181" duration="22231000" />
-      <workItem from="1742282308519" duration="17946000" />
+      <workItem from="1742282308519" duration="18257000" />
+      <workItem from="1742373008318" duration="1384000" />
     </task>
     <task id="LOCAL-00001" summary="Project creation">
       <option name="closed" value="true" />
@@ -224,7 +213,23 @@
       <option name="project" value="LOCAL" />
       <updated>1742294602949</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Cviko 5, osy x,y,z, příprava na shadery a textury, příprava na korektní vykreslování barev v perspektivě">
+      <option name="closed" value="true" />
+      <created>1742315636876</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1742315636876</updated>
+    </task>
+    <task id="LOCAL-00017" summary="testovací textura">
+      <option name="closed" value="true" />
+      <created>1742315654316</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1742315654316</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,6 +262,8 @@
     <MESSAGE value="MVP implementace" />
     <MESSAGE value="Giga bug fix" />
     <MESSAGE value="Cube a mlha fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cube a mlha fixed" />
+    <MESSAGE value="Cviko 5, osy x,y,z, příprava na shadery a textury, příprava na korektní vykreslování barev v perspektivě" />
+    <MESSAGE value="testovací textura" />
+    <option name="LAST_COMMIT_MESSAGE" value="testovací textura" />
   </component>
 </project>

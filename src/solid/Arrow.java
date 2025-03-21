@@ -30,4 +30,8 @@ public class Arrow extends Solid {
         partBuffer.add(new Part(0, 1, TopologyType.LINES));
         partBuffer.add(new Part(2, 1, TopologyType.TRIANGLES));
     }
+    @Override
+    public String getIdentifier() {
+        return "ARROW";
+    }
 }

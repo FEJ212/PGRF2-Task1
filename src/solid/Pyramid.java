@@ -34,4 +34,8 @@ public class Pyramid extends Solid{
         partBuffer.add(new Part(0,4, TopologyType.FAN));
         partBuffer.add(new Part(9,2, TopologyType.TRIANGLES));
     }
+    @Override
+    public String getIdentifier() {
+        return "PYRAMID";
+    }
 }

@@ -137,6 +137,12 @@ public class Controller3D {
                 if(objectId.equals("CUBE")){
                     processSolids(cube, e);
                 }
+                if(objectId.equals("ARROW")){
+                    processSolids(arrow, e);
+                }
+                if(objectId.equals("PYRAMID")){
+                    processSolids(pyramid, e);
+                }
             }
         });
     }
