@@ -2,9 +2,7 @@ package shader;
 
 import model.Vertex;
 import transforms.Col;
-
-import java.awt.image.BufferedImage;
-
+//shader pro vykreslení konstantní barvy
 public class ShaderConstant implements Shader{
     @Override
     public Col getColor(Vertex pixel) {

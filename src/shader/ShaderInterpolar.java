@@ -2,9 +2,7 @@ package shader;
 
 import model.Vertex;
 import transforms.Col;
-
-import java.awt.image.BufferedImage;
-
+//shader pro linerání interpolaci barev
 public class ShaderInterpolar implements Shader{
     @Override
     public Col getColor(Vertex pixel){

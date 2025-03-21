@@ -14,7 +14,7 @@ public abstract class Solid {
 
     Mat4 model = new Mat4Identity();
     Col color;
-
+    //Gettery a settery
     public Mat4 getModel() {
         return model;
     }
@@ -42,6 +42,7 @@ public abstract class Solid {
     public void setColor(Col color){
         this.color = color;
     }
+    //Aplikování transformací
     public Mat4 increaseX(){
         Mat4Transl mat = new Mat4Transl(new Vec3D(1,0,0));
         return getModel().mul(mat);
@@ -96,7 +97,7 @@ public abstract class Solid {
         Mat4Scale mat = new Mat4Scale(0.9);
         return getModel().mul(mat);
     }
-
+    //Defaultní identifikace
     public String getIdentifier(){
         return "DEFAULT";
     }
